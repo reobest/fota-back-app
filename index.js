@@ -12,7 +12,7 @@ let Data = "0"
 app.use('/',express.static('../backend'))
 app.use('/images',express.static('images'))
 app.use(cors({
-    origin:'http://localhost:3000',
+    origin:['http://localhost:3000','https://fota-app4.onrender.com'],
     credentials:true,
     optionsSuccessStatus:200,
 }))
