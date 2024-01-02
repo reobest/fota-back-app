@@ -1,0 +1,23 @@
+{
+  "name": "node-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js && livereload",
+    "watch": "nodemon /file.txt",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "connect-livereload": "^0.6.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "live-server": "^1.2.2",
+    "livereload": "^0.9.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
