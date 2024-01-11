@@ -3,6 +3,7 @@ const express = require("express")
 // const io = require('socket.io')(server);
 // io.on('connection', () => { /* … */ });
 // server.listen(3000);
+const serveIndex = require("serve-index")
 const livereload = require("livereload");
 const connectLivereload = require("connect-livereload");
 
@@ -21,7 +22,11 @@ app.use(cors({
     credentials:true,
     optionsSuccessStatus:200,
 }))
-
+app.use(
+'/ftp',
+express.static('ftp'),
+serveIndex('ftp',{icons :true})
+)
 // 
 
 
