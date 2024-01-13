@@ -1,17 +1,30 @@
 const express = require("express")
 const serveIndex = require("serve-index")
-const livereload = require("livereload");
-const connectLivereload = require("connect-livereload");
 const bodyParser = require('body-parser')
-
-
 const app = express()
 app.use(express.json())
 const cors = require("cors")
 const fs = require("fs");
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+//
+const https = require('https');
 
+const privateKey = fs.readFileSync('ssl/private-key.pem', 'utf8')
+const certificate = fs.readFileSync('ssl/certificate.pem', 'utf8')
+const credentials = { key: privateKey, cert: certificate }
+const server = https.createServer(credentials, (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello, HTTPS World!\n');
+  });
+  //connect esp8266 to deployed node js server heroku apps:info --json -a your-app-name
+//Replace your-app-name with the actual name of your Heroku app. Look for the web_url property in the output. This URL corresponds to your application's public endpoint, and its IP address is what external users see.
+  const PORT = 443; // Default HTTPS port
+  
+  server.listen(PORT, () => {
+    console.log(`Server running at https://localhost:${PORT}/`);
+  });
+//
 let Data = "0"
 app.use('/',express.static('../backend'))
 app.use('/images',express.static('images'))
@@ -25,13 +38,6 @@ app.use(
 express.static('ftp'),
 serveIndex('ftp',{icons :true})
 )
-// 
-
-
-
-
-// monkey patch every served HTML so they know of changes
-
 app.get('/',(req,res) => {
     res.status(200).send("jjj")
 })
@@ -39,11 +45,8 @@ app.get('/file.txt',(req,res) => {
     res.status(200).sendFile(__dirname + "/file.txt",err => console.log("rayan"))
 })
 app.get('/led',(req,res) => {
-    const {one} = req.body  
-    res.writeHead(200,{'Content-Type' : 'text/plain'})
-    //res.status(200).sendFile(__dirname + "/file.txt",err => console.log("rayan"))
+   res.status(200).sendFile(__dirname + "/file.txt",err => console.log("rayan"))
     res.end("rayan")
-    // response.writeHead(200,{'Content-Type':'text/plain'})
 })
 app.post('/led',async(req,res) => {
     const {one} = req.body
