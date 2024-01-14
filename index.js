@@ -15,12 +15,13 @@ const server = https.createServer(credentials, (req, res) => {
   });
   //connect esp8266 to deployed node js server heroku apps:info --json -a your-app-name
 //Replace your-app-name with the actual name of your Heroku app. Look for the web_url property in the output. This URL corresponds to your application's public endpoint, and its IP address is what external users see.
-  const PORT = 443; // Default HTTPS port
+//   const PORT = 443; // Default HTTPS port
   
-  server.listen(PORT, () => {
-    console.log(`Server running at https://localhost:${PORT}/`);
-  });
+//   server.listen(PORT, () => {
+//     console.log(`Server running at https://localhost:${PORT}/`);
+//   });
 //
+var port = process.env.PORT || 5000
 let Data = "0"
 app.use('/',express.static('../backend'))
 app.use('/images',express.static('images'))
@@ -53,7 +54,7 @@ app.post('/led',async(req,res) => {
     console.log(one);
     res.status(200).send("rayan")
 })
-console.log(process.env.PORT);
-app.listen(process.env.PORT ||5000,() => {
+console.log("port = "+ port);
+app.listen(port,() => {
     console.log("Lestening at port 5000");
 })
