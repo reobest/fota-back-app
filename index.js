@@ -1,17 +1,11 @@
 const express = require("express")
 const serveIndex = require("serve-index")
-const bodyParser = require('body-parser')
 const app = express()
 app.use(express.json())
 const cors = require("cors")
 require('dotenv').config()
 const fs = require("fs");
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-//
 const https = require('https');
-const { log } = require("console")
-
 const privateKey = fs.readFileSync('ssl/private-key.pem', 'utf8')
 const certificate = fs.readFileSync('ssl/certificate.pem', 'utf8')
 const credentials = { key: privateKey, cert: certificate }
