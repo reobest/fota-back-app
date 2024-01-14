@@ -4,11 +4,13 @@ const bodyParser = require('body-parser')
 const app = express()
 app.use(express.json())
 const cors = require("cors")
+require('dotenv').config()
 const fs = require("fs");
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 //
 const https = require('https');
+const { log } = require("console")
 
 const privateKey = fs.readFileSync('ssl/private-key.pem', 'utf8')
 const certificate = fs.readFileSync('ssl/certificate.pem', 'utf8')
@@ -57,6 +59,7 @@ app.post('/led',async(req,res) => {
     console.log(one);
     res.status(200).send("rayan")
 })
-app.listen(5000,() => {
+console.log(process.env.PORT);
+app.listen(process.env.PORT ||5000,() => {
     console.log("Lestening at port 5000");
 })
